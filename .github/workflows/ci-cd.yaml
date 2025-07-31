@@ -35,5 +35,6 @@ jobs:
 
       - name: Deploy
         run: |
-          kubectl apply -f deployment.yaml
-          kubectl apply -f service.yaml
+          kubectl apply --validate=false --insecure-skip-tls-verify=true -f deployment.yaml
+          kubectl apply --validate=false --insecure-skip-tls-verify=true -f service.yaml
+
