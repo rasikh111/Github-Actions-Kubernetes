@@ -9,6 +9,10 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
+    env:
+      IMAGE_NAME: rasikh11/hello-kubernetes
+      IMAGE_TAG: ${{ github.sha }}
+
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -25,16 +29,20 @@ jobs:
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v4
         with:
+          context: .
           push: true
-          tags: rasikh11/hello-kubernetes:latest
+          tags: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+
+      - name: Update image tag in deployment.yaml
+        run: |
+          sed -i "s|${{ env.IMAGE_NAME }}:latest|${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}|g" deployment.yaml
 
       - name: Set up Kubectl
         uses: azure/k8s-set-context@v1
         with:
           kubeconfig: ${{ secrets.KUBE_CONFIG_DATA }}
 
-      - name: Deploy
+      - name: Deploy to Kubernetes
         run: |
           kubectl apply --validate=false --insecure-skip-tls-verify=true -f deployment.yaml
           kubectl apply --validate=false --insecure-skip-tls-verify=true -f service.yaml
-
