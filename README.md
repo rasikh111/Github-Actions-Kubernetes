@@ -280,8 +280,10 @@ This project is licensed under the Apache License Version 2.0- see the [LICENSE]
 
 **Feel free to reach out if you have any questions or need further assistance!**
 
-# 😊 Happy Coding!
-
+##Troubleshooting:
+- ensure change tag in workflow file your dockerhub username and repo
+- And ensure i was used --insecure-tls that was not for production, because it was demo and apiserver not listen outside, i was used public ip in kubeconfig file, that was public ip of apiserver. because i was used self-hosted cluster(kubeadm).  To ensure Tesing i make sure --insecure for deploy resoures.
+ 
 ---
 
 ## Additional Resources
