@@ -26,7 +26,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
-          tags: your-dockerhub-username/hello-kubernetes:latest
+          tags: rasikh11/hello-kubernetes:latest
 
       - name: Set up Kubectl
         uses: azure/k8s-set-context@v1
